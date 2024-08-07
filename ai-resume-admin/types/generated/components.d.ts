@@ -1,19 +1,14 @@
 import type { Struct, Schema } from '@strapi/strapi';
 
-export interface ExperienceExperience extends Struct.ComponentSchema {
-  collectionName: 'components_experience_experiences';
+export interface SkillsSkills extends Struct.ComponentSchema {
+  collectionName: 'components_skills_skills';
   info: {
-    displayName: 'Experience';
-    icon: 'bulletList';
+    displayName: 'Skills';
+    icon: 'apps';
   };
   attributes: {
-    title: Schema.Attribute.String;
-    companyName: Schema.Attribute.String;
-    city: Schema.Attribute.String;
-    state: Schema.Attribute.String;
-    startDate: Schema.Attribute.String;
-    endDate: Schema.Attribute.String;
-    workSummary: Schema.Attribute.String;
+    name: Schema.Attribute.String;
+    rating: Schema.Attribute.Integer;
   };
 }
 
@@ -33,11 +28,29 @@ export interface EducationEducation extends Struct.ComponentSchema {
   };
 }
 
+export interface ExperienceExperience extends Struct.ComponentSchema {
+  collectionName: 'components_experience_experiences';
+  info: {
+    displayName: 'Experience';
+    icon: 'bulletList';
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+    companyName: Schema.Attribute.String;
+    city: Schema.Attribute.String;
+    state: Schema.Attribute.String;
+    startDate: Schema.Attribute.String;
+    endDate: Schema.Attribute.String;
+    workSummary: Schema.Attribute.String;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'experience.experience': ExperienceExperience;
+      'skills.skills': SkillsSkills;
       'education.education': EducationEducation;
+      'experience.experience': ExperienceExperience;
     }
   }
 }
