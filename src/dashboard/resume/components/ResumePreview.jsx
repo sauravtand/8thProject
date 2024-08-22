@@ -8,7 +8,7 @@ import SkillsPreview from "./preview/SkillsPreview";
 
 function ResumePreview() {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-
+  console.log(resumeInfo, "resumeInfo");
   return (
     <div
       className="shadow-lg h-full p-14 border-t-[20px]"
@@ -25,7 +25,7 @@ function ResumePreview() {
         <ExperiencePreview resumeInfo={resumeInfo} />
       )}
       {/* Educational  */}
-      {resumeInfo?.education?.length > 0 && (
+      {resumeInfo?.Education?.length > 0 && (
         <EducationalPreview resumeInfo={resumeInfo} />
       )}
       {/* Skilss  */}

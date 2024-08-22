@@ -10,21 +10,28 @@ import { toast } from "sonner";
 
 function Education() {
   const [educationalList, setEducationalList] = useState([]);
+  const [errors, setErrors] = useState([]);
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
   const params = useParams();
   const [loading, setLoading] = useState(false);
 
-  console.log(resumeInfo, "info");
-
   useEffect(() => {
-    resumeInfo?.Education.length > 0 &&
+    if (resumeInfo?.Education?.length > 0) {
       setEducationalList(resumeInfo?.Education);
-  }, []);
+      setErrors(new Array(resumeInfo?.Education.length).fill({}));
+    }
+  }, [resumeInfo]);
+
   const handleChange = (event, index) => {
-    const newEntries = educationalList.slice();
     const { name, value } = event.target;
+    const newEntries = educationalList.slice();
     newEntries[index][name] = value;
     setEducationalList(newEntries);
+
+    // Clear errors when the user starts typing
+    const newErrors = [...errors];
+    newErrors[index] = { ...newErrors[index], [name]: "" };
+    setErrors(newErrors);
   };
 
   const AddNewEducation = () => {
@@ -39,31 +46,66 @@ function Education() {
         description: "",
       },
     ]);
+    setErrors([...errors, {}]);
   };
+
   const RemoveEducation = () => {
     setEducationalList((educationalList) => educationalList.slice(0, -1));
+    setErrors((errors) => errors.slice(0, -1));
   };
 
   useEffect(() => {
     setResumeInfo({
       ...resumeInfo,
-      education: educationalList,
+      Education: educationalList,
     });
   }, [educationalList]);
 
+  const validateForm = () => {
+    const newErrors = educationalList.map((item) => {
+      let itemErrors = {};
+
+      if (!item.universityName)
+        itemErrors.universityName = "University Name is required";
+      if (!item.degree) itemErrors.degree = "Degree is required";
+      if (!item.major) itemErrors.major = "Major is required";
+      if (!item.startDate) itemErrors.startDate = "Start Date is required";
+      if (!item.endDate) itemErrors.endDate = "End Date is required";
+      // if (!item.description) itemErrors.description = "Description is required";
+
+      // Check if the start date is earlier than the end date
+      if (
+        item.startDate &&
+        item.endDate &&
+        new Date(item.startDate) > new Date(item.endDate)
+      ) {
+        itemErrors.endDate = "End Date must be later than Start Date";
+      }
+
+      return itemErrors;
+    });
+
+    setErrors(newErrors);
+    return newErrors.every((error) => Object.keys(error).length === 0);
+  };
+
   const onSave = () => {
+    if (!validateForm()) {
+      toast("Please fill all required fields correctly");
+      return;
+    }
+
     setLoading(true);
     const data = {
       data: {
-        Education: educationalList?.map(({ id, ...rest }) => rest),
+        Education: educationalList.map(({ id, ...rest }) => rest),
       },
     };
 
     GlobalApi.UpdateResumeDetail(params.resumeId, data).then(
       (resp) => {
-        console.log(resp);
         setLoading(false);
-        toast("Details updated !");
+        toast("Details updated!");
       },
       (error) => {
         setLoading(false);
@@ -79,31 +121,47 @@ function Education() {
 
       <div>
         {educationalList?.map((item, index) => (
-          <div>
+          <div key={index}>
             <div className="grid grid-cols-2 gap-3 border p-3 my-5 rounded-lg">
               <div className="col-span-2">
                 <label>University Name</label>
                 <Input
                   name="universityName"
                   onChange={(e) => handleChange(e, index)}
-                  defaultValue={item?.universityName}
+                  value={item?.universityName}
+                  className={
+                    errors[index]?.universityName ? "border-red-500" : ""
+                  }
                 />
+                {errors[index]?.universityName && (
+                  <p className="text-red-500 text-sm">
+                    {errors[index].universityName}
+                  </p>
+                )}
               </div>
               <div>
                 <label>Degree</label>
                 <Input
                   name="degree"
                   onChange={(e) => handleChange(e, index)}
-                  defaultValue={item?.degree}
+                  value={item?.degree}
+                  className={errors[index]?.degree ? "border-red-500" : ""}
                 />
+                {errors[index]?.degree && (
+                  <p className="text-red-500 text-sm">{errors[index].degree}</p>
+                )}
               </div>
               <div>
                 <label>Major</label>
                 <Input
                   name="major"
                   onChange={(e) => handleChange(e, index)}
-                  defaultValue={item?.major}
+                  value={item?.major}
+                  className={errors[index]?.major ? "border-red-500" : ""}
                 />
+                {errors[index]?.major && (
+                  <p className="text-red-500 text-sm">{errors[index].major}</p>
+                )}
               </div>
               <div>
                 <label>Start Date</label>
@@ -111,8 +169,14 @@ function Education() {
                   type="date"
                   name="startDate"
                   onChange={(e) => handleChange(e, index)}
-                  defaultValue={item?.startDate}
+                  value={item?.startDate}
+                  className={errors[index]?.startDate ? "border-red-500" : ""}
                 />
+                {errors[index]?.startDate && (
+                  <p className="text-red-500 text-sm">
+                    {errors[index].startDate}
+                  </p>
+                )}
               </div>
               <div>
                 <label>End Date</label>
@@ -120,16 +184,28 @@ function Education() {
                   type="date"
                   name="endDate"
                   onChange={(e) => handleChange(e, index)}
-                  defaultValue={item?.endDate}
+                  value={item?.endDate}
+                  className={errors[index]?.endDate ? "border-red-500" : ""}
                 />
+                {errors[index]?.endDate && (
+                  <p className="text-red-500 text-sm">
+                    {errors[index].endDate}
+                  </p>
+                )}
               </div>
               <div className="col-span-2">
                 <label>Description</label>
                 <Textarea
                   name="description"
                   onChange={(e) => handleChange(e, index)}
-                  defaultValue={item?.description}
+                  value={item?.description}
+                  className={errors[index]?.description ? "border-red-500" : ""}
                 />
+                {errors[index]?.description && (
+                  <p className="text-red-500 text-sm">
+                    {errors[index].description}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -142,7 +218,6 @@ function Education() {
             onClick={AddNewEducation}
             className="text-primary"
           >
-            {" "}
             + Add More Education
           </Button>
           <Button
@@ -150,11 +225,10 @@ function Education() {
             onClick={RemoveEducation}
             className="text-primary"
           >
-            {" "}
             - Remove
           </Button>
         </div>
-        <Button disabled={loading} onClick={() => onSave()}>
+        <Button disabled={loading} onClick={onSave}>
           {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
         </Button>
       </div>

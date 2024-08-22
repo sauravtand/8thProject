@@ -17,7 +17,7 @@ function EducationalPreview({ resumeInfo }) {
         }}
       />
 
-      {resumeInfo?.education.map((education, index) => (
+      {resumeInfo?.Education.map((education, index) => (
         <div key={index} className="my-5">
           <h2
             className="text-sm font-bold"
@@ -27,12 +27,21 @@ function EducationalPreview({ resumeInfo }) {
           >
             {education.universityName}
           </h2>
+          <h2
+            className="text-sm font-bold"
+            style={{
+              color: resumeInfo?.themeColor,
+            }}
+          >
+            {education.degree}
+          </h2>
           <h2 className="text-xs flex justify-between">
-            {education?.degree} in {education?.major}
+            {education?.major}
             <span>
-              {education?.startDate} - {education?.endDate}
+              {education?.startDate} To {education?.endDate}
             </span>
           </h2>
+
           <p className="text-xs my-2">{education?.description}</p>
         </div>
       ))}
