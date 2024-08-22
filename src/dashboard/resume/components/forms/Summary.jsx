@@ -27,9 +27,9 @@ function Summary({ enabledNext }) {
   const GenerateSummaryFromAI = async () => {
     setLoading(true);
     const PROMPT = prompt.replace("{jobTitle}", resumeInfo?.jobTitle);
-    console.log(PROMPT);
+
     const result = await AIChatSession.sendMessage(PROMPT);
-    console.log(JSON.parse(result.response.text()));
+   
 
     setAiGenerateSummaryList(JSON.parse(result.response.text()));
     setLoading(false);
@@ -46,7 +46,7 @@ function Summary({ enabledNext }) {
     };
     GlobalApi.UpdateResumeDetail(params?.resumeId, data).then(
       (resp) => {
-        console.log(resp);
+  
         enabledNext(true);
         setLoading(false);
         toast("Details updated");

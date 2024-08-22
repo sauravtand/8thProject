@@ -35,7 +35,7 @@ function ResumeCardItem({ resume, refreshData }) {
     setLoading(true);
     GlobalApi.DeleteResumeById(resume.documentId).then(
       (resp) => {
-        console.log(resp);
+      
         toast("Resume Deleted!");
         refreshData();
         setLoading(false);
@@ -46,7 +46,7 @@ function ResumeCardItem({ resume, refreshData }) {
       }
     );
   };
-  console.log(resume.title, "tit");
+ 
   return (
     <div className="">
       <Link to={"/dashboard/resume/" + resume.documentId + "/edit"}>

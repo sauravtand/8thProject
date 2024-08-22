@@ -9,18 +9,25 @@ const axiosClient = axios.create({
   },
 });
 
+// Other existing methods
 const CreateNewResume = (data) => axiosClient.post("/user-resumes", data);
-
 const GetUserResumes = (userEmail) =>
   axiosClient.get("/user-resumes?filters[userEmail][$eq]=" + userEmail);
-
 const UpdateResumeDetail = (id, data) =>
   axiosClient.put("/user-resumes/" + id, data);
-
 const GetResumeById = (id) =>
   axiosClient.get("/user-resumes/" + id + "?populate=*");
-
 const DeleteResumeById = (id) => axiosClient.delete("/user-resumes/" + id);
+
+// New method for uploading files
+const uploadFile = (formData) => {
+  return axios.post("http://localhost:1337/api/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${API_KEY}`,
+    },
+  });
+};
 
 export default {
   CreateNewResume,
@@ -28,4 +35,5 @@ export default {
   UpdateResumeDetail,
   GetResumeById,
   DeleteResumeById,
+  uploadFile, // Export the new method
 };
