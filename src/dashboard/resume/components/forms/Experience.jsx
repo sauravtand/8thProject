@@ -31,6 +31,23 @@ function Experience() {
     // Clear errors when the user starts typing
     const newErrors = [...errors];
     newErrors[index] = { ...newErrors[index], [name]: "" };
+
+    // Additional validation checks
+    if (name === "startDate" || name === "endDate") {
+      if (name === "endDate" && new Date(value) > new Date()) {
+        newErrors[index][name] = "End Date cannot be in the future";
+      } else if (newEntries[index].startDate && newEntries[index].endDate) {
+        if (
+          new Date(newEntries[index].startDate) >
+          new Date(newEntries[index].endDate)
+        ) {
+          newErrors[index].endDate = "End Date must be later than Start Date";
+        } else {
+          newErrors[index].endDate = "";
+        }
+      }
+    }
+
     setErrors(newErrors);
   };
 
@@ -74,6 +91,7 @@ function Experience() {
   }, [experienceList]);
 
   const validateForm = () => {
+    const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
     const newErrors = experienceList.map((item) => {
       let itemErrors = {};
 
@@ -84,8 +102,6 @@ function Experience() {
       if (!item.state) itemErrors.state = "State is required";
       if (!item.startDate) itemErrors.startDate = "Start Date is required";
       if (!item.endDate) itemErrors.endDate = "End Date is required";
-      if (!item.workSummary)
-        itemErrors.workSummary = "Work Summary is required";
 
       // Check if the start date is earlier than the end date
       if (
@@ -94,6 +110,11 @@ function Experience() {
         new Date(item.startDate) > new Date(item.endDate)
       ) {
         itemErrors.endDate = "End Date must be later than Start Date";
+      }
+
+      // Check if the end date is greater than today's date
+      if (item.endDate && new Date(item.endDate) > new Date(today)) {
+        itemErrors.endDate = "End Date cannot be in the future";
       }
 
       return itemErrors;
