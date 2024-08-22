@@ -97,6 +97,9 @@ function PersonalDetail({ enabledNext }) {
             <label className="text-sm">Phone</label>
             <Input
               name="phone"
+              type="tel"
+              pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
+              title="Please enter a valid phone number in the format XXX-XXX-XXXX"
               required
               defaultValue={resumeInfo?.phone}
               onChange={handleInputChange}
@@ -106,6 +109,9 @@ function PersonalDetail({ enabledNext }) {
             <label className="text-sm">Email</label>
             <Input
               name="email"
+              type="email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              title="Please enter a valid email address"
               required
               defaultValue={resumeInfo?.email}
               onChange={handleInputChange}
