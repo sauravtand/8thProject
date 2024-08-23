@@ -6,42 +6,42 @@ function PersonalDetailPreview({ resumeInfo }) {
     : null;
   return (
     <div>
-      <div className="text-center mb-4">
+      <div className="flex items-center mb-4">
         {photoUrl ? (
           <img
             src={photoUrl}
             alt={`${resumeInfo?.firstName} ${resumeInfo?.lastName}`}
-            className="w-24 h-24 rounded-full mx-auto"
+            className="w-24 h-24 rounded-full"
             style={{ borderColor: resumeInfo?.themeColor }}
           />
         ) : (
           <div
-            className="w-24 h-24 rounded-full bg-gray-200 mx-auto flex items-center justify-center"
+            className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center"
             style={{ borderColor: resumeInfo?.themeColor }}
           >
             <span className="text-gray-500">No Photo</span>
           </div>
         )}
+        <div className="ml-4 flex flex-col items-center">
+          <h2
+            className="font-bold text-xl"
+            style={{
+              color: resumeInfo?.themeColor,
+            }}
+          >
+            {resumeInfo?.firstName} {resumeInfo?.lastName}
+          </h2>
+          <h2 className="text-sm font-medium">{resumeInfo?.jobTitle}</h2>
+          <h2
+            className="text-xs font-normal"
+            style={{
+              color: resumeInfo?.themeColor,
+            }}
+          >
+            {resumeInfo?.address}
+          </h2>
+        </div>
       </div>
-      <h2
-        className="font-bold text-xl text-center"
-        style={{
-          color: resumeInfo?.themeColor,
-        }}
-      >
-        {resumeInfo?.firstName} {resumeInfo?.lastName}
-      </h2>
-      <h2 className="text-center text-sm font-medium">
-        {resumeInfo?.jobTitle}
-      </h2>
-      <h2
-        className="text-center font-normal text-xs"
-        style={{
-          color: resumeInfo?.themeColor,
-        }}
-      >
-        {resumeInfo?.address}
-      </h2>
 
       <div className="flex justify-between">
         <h2

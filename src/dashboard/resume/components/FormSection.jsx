@@ -8,6 +8,7 @@ import Education from "./forms/Education";
 import Skills from "./forms/Skills";
 import { Link, Navigate, useParams } from "react-router-dom";
 import ThemeColor from "./ThemeColor";
+import TemplateFormat from "./TemplateFormat";
 
 function FormSection() {
   const [activeFormIndex, setActiveFormIndex] = useState(1);
@@ -23,6 +24,7 @@ function FormSection() {
             </Button>
           </Link>
           <ThemeColor />
+          <TemplateFormat />
         </div>
         <div className="flex gap-2">
           {activeFormIndex > 1 && (

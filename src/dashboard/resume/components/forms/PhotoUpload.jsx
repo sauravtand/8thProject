@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 function ProfilePhotoUpload({ photoPreview, onFileChange }) {
   const [preview, setPreview] = useState(photoPreview);
-  console.log(preview, "hello");
 
   useEffect(() => {
     setPreview(photoPreview); // Update preview if the photoPreview prop changes
