@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_projects_projects",
+  "info": {
+    "displayName": "Projects",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "projectName": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string"
+    },
+    "projectDesc": {
+      "type": "text"
+    }
+  }
+}

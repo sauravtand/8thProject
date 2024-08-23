@@ -29,6 +29,7 @@ export interface ApiUserResumeUserResume extends Struct.CollectionTypeSchema {
     themeColor: Schema.Attribute.String;
     photo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     template: Schema.Attribute.String;
+    project: Schema.Attribute.Component<'projects.projects', true>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

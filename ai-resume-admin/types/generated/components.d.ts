@@ -12,6 +12,19 @@ export interface SkillsSkills extends Struct.ComponentSchema {
   };
 }
 
+export interface ProjectsProjects extends Struct.ComponentSchema {
+  collectionName: 'components_projects_projects';
+  info: {
+    displayName: 'Projects';
+    icon: 'layer';
+  };
+  attributes: {
+    projectName: Schema.Attribute.String;
+    link: Schema.Attribute.String;
+    projectDesc: Schema.Attribute.Text;
+  };
+}
+
 export interface ExperienceExperience extends Struct.ComponentSchema {
   collectionName: 'components_experience_experiences';
   info: {
@@ -49,6 +62,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'skills.skills': SkillsSkills;
+      'projects.projects': ProjectsProjects;
       'experience.experience': ExperienceExperience;
       'education.education': EducationEducation;
     }

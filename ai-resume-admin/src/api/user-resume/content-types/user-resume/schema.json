@@ -77,6 +77,11 @@
     },
     "template": {
       "type": "string"
+    },
+    "project": {
+      "type": "component",
+      "repeatable": true,
+      "component": "projects.projects"
     }
   }
 }

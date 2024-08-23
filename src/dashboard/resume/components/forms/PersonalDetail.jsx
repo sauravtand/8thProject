@@ -13,6 +13,7 @@ const BASE_URL = "http://localhost:1337"; // Replace with your Strapi base URL
 function PersonalDetail({ enabledNext }) {
   const params = useParams();
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  console.log(resumeInfo, "Info");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",

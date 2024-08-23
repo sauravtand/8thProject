@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Popover,
   PopoverContent,
@@ -20,9 +20,17 @@ function TemplateFormat() {
   ];
 
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  
-  const [selectedTemplate, setSelectedTemplate] = useState();
   const { resumeId } = useParams();
+
+  // Determine the initial selected template
+  const initialTemplate =
+    formats.find((item) => item.id === resumeInfo?.template) || formats[0];
+
+  const [selectedTemplate, setSelectedTemplate] = useState(initialTemplate);
+
+  useEffect(() => {
+    setSelectedTemplate(initialTemplate);
+  }, [resumeInfo]);
 
   const onTemplateSelect = (template) => {
     setSelectedTemplate(template);
@@ -52,7 +60,7 @@ function TemplateFormat() {
       <PopoverContent>
         <h2 className="mb-2 text-sm font-bold">Select Template</h2>
         <select
-          value={selectedTemplate ? selectedTemplate.value : ""}
+          value={selectedTemplate.value}
           onChange={(e) =>
             onTemplateSelect(
               formats.find((item) => item.value === e.target.value)

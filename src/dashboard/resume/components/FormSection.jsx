@@ -9,6 +9,7 @@ import Skills from "./forms/Skills";
 import { Link, Navigate, useParams } from "react-router-dom";
 import ThemeColor from "./ThemeColor";
 import TemplateFormat from "./TemplateFormat";
+import ProjectList from "./forms/ProjectList";
 
 function FormSection() {
   const [activeFormIndex, setActiveFormIndex] = useState(1);
@@ -58,8 +59,10 @@ function FormSection() {
       ) : activeFormIndex == 4 ? (
         <Education />
       ) : activeFormIndex == 5 ? (
-        <Skills />
+        <ProjectList />
       ) : activeFormIndex == 6 ? (
+        <Skills />
+      ) : activeFormIndex == 7 ? (
         <Navigate to={"/my-resume/" + resumeId + "/view"} />
       ) : null}
 

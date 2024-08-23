@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import ExperiencePreview from "./preview/ExperiencePreview";
 import EducationalPreview from "./preview/EducationalPreview";
 import SkillsPreview from "./preview/SkillsPreview";
+import ProjectPreview from "./preview/ProjectPreview";
 
 const CanadianFormat = () => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
@@ -41,6 +42,13 @@ const CanadianFormat = () => {
       {resumeInfo?.Education?.length > 0 && (
         <section className="mb-6">
           <EducationalPreview resumeInfo={resumeInfo} />
+        </section>
+      )}
+
+      {/* Project List */}
+      {resumeInfo?.project?.length > 0 && (
+        <section className="mb-6">
+          <ProjectPreview resumeInfo={resumeInfo} />
         </section>
       )}
 

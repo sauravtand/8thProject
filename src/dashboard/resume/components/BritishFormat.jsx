@@ -5,6 +5,7 @@ import SummaryPreview from "./preview/SummaryPreview";
 import ExperiencePreview from "./preview/ExperiencePreview";
 import EducationalPreview from "./preview/EducationalPreview";
 import SkillsPreview from "./preview/SkillsPreview";
+import ProjectPreview from "./preview/ProjectPreview";
 
 const BritishFormat = () => {
   const { resumeInfo } = useContext(ResumeInfoContext);
@@ -39,6 +40,13 @@ const BritishFormat = () => {
       {resumeInfo?.Education?.length > 0 && (
         <section className="mb-6">
           <EducationalPreview resumeInfo={resumeInfo} />
+        </section>
+      )}
+
+      {/* Project List */}
+      {resumeInfo?.project?.length > 0 && (
+        <section className="mb-6">
+          <ProjectPreview resumeInfo={resumeInfo} />
         </section>
       )}
 
